@@ -10,7 +10,7 @@ def index():
         'title': 'Este es el titulo de mi pagina web'
     }
     # data es un diccionario con parametros para usar la plantilla de forma dinámica
-    return render_template('index.html', data)
+    return render_template('index.html', data=data)
 
 if __name__=='__main__':
     app.run(debug=True)#, port=500)
