@@ -15,5 +15,13 @@ def index():
     # data es un diccionario con parametros para usar la plantilla de forma dinámica
     return render_template('index.html', data=data)
 
+@app.route('/contacto/<nombre>')
+def contacto(nombre):
+    data ={
+        'titulo': 'contacto',
+        'nombre':   nombre
+    }
+    return render_template('contacto.html',data = data)
+
 if __name__=='__main__':
     app.run(debug=True)#, port=500)

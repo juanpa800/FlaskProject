@@ -1,0 +1,9 @@
+{% extends './layout.html'%}
+<!-- heredamos desde la plantilla layouts -->
+<!-- y procedemos a reemplazar los bloques -->
+{% block titleForTab%}{{ data.tab_title}}{% endblock %}
+
+{% block body %}
+<h1>{{ data.nombre }}</h1>
+
+{% endblock %}
