@@ -1,6 +1,30 @@
 from flask import Flask, redirect, render_template, request, url_for
+import pyodbc
 
 app = Flask(__name__)
+
+
+def connection():
+    s = '(localdb)\LocalFlaskP1' #Your server name 
+    d = 'DBPruebaDatabase' 
+    u = '' #Your login
+    p = '' #Your login password
+    cstr = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER='+s+';DATABASE='+d+';UID='+u+';PWD='+ p
+    conn = pyodbc.connect(cstr)
+    return conn
+    # conn = connection()
+    # cursor = conn.cursor()
+    # cursor.execute("SELECT * FROM dbo.p1_prueba")
+
+@app.before_request
+def before_request():
+    print('antes de la petición...')
+
+
+@app.after_request
+def after_request( response):
+    print('después de la petición...')
+    return response
 
 @app.route('/')
 def index():
