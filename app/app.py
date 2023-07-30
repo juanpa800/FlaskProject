@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 
@@ -31,8 +31,12 @@ def query_string():
     print(request.args.get('param2'))
     return "OK"
 
-
+def pagina_no_encontrada(error):
+    # utilizar cualquiera de las 2 lineas
+    # return render_template('404.html'), 404
+    return redirect(url_for('index'))
 
 if __name__=='__main__':
     app.add_url_rule('/query_string', view_func=query_string) # utilizar en el navegador 127.0.0.1:5000/query_string?param1=Jose&param2=239
+    app.register_error_handler(404, pagina_no_encontrada)
     app.run(debug=True)#, port=500)
