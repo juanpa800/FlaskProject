@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, redirect, render_template, request, url_for
-from config import config
 import pyodbc
-
 
 app = Flask(__name__)
 
@@ -44,15 +42,6 @@ def index():
     # data es un diccionario con parametros para usar la plantilla de forma dinámica
     return render_template('index.html', data=data)
 
-@app.route('/login')
-def login():
-    data = {
-        'tab_title': 'Login',
-        'title': 'Formulario para logearse',
-        # 'lista': cursos,
-        # 'sizeLista': len(cursos)
-    }
-    return render_template('login.html', data = data)
 
 @app.route('/contacto/<nombre>/<int:edad>')
 def contacto(nombre, edad):
@@ -108,5 +97,4 @@ if __name__ == '__main__':
     # utilizar en el navegador 127.0.0.1:5000/query_string?param1=Jose&param2=239
     app.add_url_rule('/query_string', view_func=query_string)
     app.register_error_handler(404, pagina_no_encontrada)
-    app.config.from_object(config['development'])
-    app.run()  # , port=500)
+    app.run(debug=True)  # , port=500)
