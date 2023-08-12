@@ -44,15 +44,22 @@ def index():
     # data es un diccionario con parametros para usar la plantilla de forma dinámica
     return render_template('index.html', data=data)
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
-    data = {
-        'tab_title': 'Login',
-        'title': 'Formulario para logearse',
-        # 'lista': cursos,
-        # 'sizeLista': len(cursos)
-    }
-    return render_template('login.html', data = data)
+    if request.method == 'POST':
+        print(request.form['userInput'])
+        print(request.form['password'])
+        data = {
+            'tab_title': 'Login',
+            'title': 'Formulario para logearse'
+        }
+        return render_template('login.html', data = data)
+    else:
+        data = {
+            'tab_title': 'Login',
+            'title': 'Formulario para logearse'
+        }
+        return render_template('login.html', data = data)
 
 @app.route('/contacto/<nombre>/<int:edad>')
 def contacto(nombre, edad):
