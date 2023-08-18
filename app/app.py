@@ -1,7 +1,8 @@
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
 import pyodbc
 
-from config import config, db
+from config import config
+from env import db
 
 # Models
 from models.ModelUsuarios import ModelUsuarios
