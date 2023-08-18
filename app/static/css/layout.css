@@ -1,3 +1,15 @@
 body{
     background-color: rgb(252, 251, 245);
 }
+
+.btn-secondarylight{
+    background-color: rgb(147, 156, 164);
+    color: white;
+    background-color: rgb(131, 141, 149)
+}
+
+.btn-secondarylight:hover{
+    background-color: rgb(131, 141, 149);
+    color: white;
+
+}

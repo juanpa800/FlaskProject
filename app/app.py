@@ -1,20 +1,21 @@
-from flask import Flask, jsonify, redirect, render_template, request, url_for
-from config import config
+from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
 import pyodbc
 
+from config import config, db
+
+# Models
+from models.ModelUsuarios import ModelUsuarios
+
+#Entities:
+from models.entities.usuario import usuario
 
 app = Flask(__name__)
+    
+cstr = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + \
+    db['SQLSERVER_SERVER']+';DATABASE='+db['SQLSERVER_DATABASE']+';UID='+db['u']+';PWD=' + db['p']
 
-
-def connection():
-    s = '(localdb)\LocalFlaskP1'  # Your server name
-    d = 'DBPruebaDatabase'
-    u = ''  # Your login
-    p = ''  # Your login password
-    cstr = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + \
-        s+';DATABASE='+d+';UID='+u+';PWD=' + p
-    conn = pyodbc.connect(cstr)
-    return conn
+conn = pyodbc.connect(cstr)
+    # return conn
     # conn = connection()
     # cursor = conn.cursor()
     # cursor.execute("SELECT * FROM dbo.p1_prueba")
@@ -39,20 +40,36 @@ def index():
         'tab_title': 'Titulo de la pagina web',
         'title': 'Este es el titulo de mi pagina web',
         'lista': cursos,
-        'sizeLista': len(cursos)
+        'sizeLista': len(cursos),
+        'navbar': {
+            'home': "{url_for('index')}",
+            'features': "{url_for('index')}",
+            'thisproject': "https://github.com/juanpa800/FlaskProject"
+        }
     }
     # data es un diccionario con parametros para usar la plantilla de forma dinámica
     return render_template('index.html', data=data)
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    if request.method == 'POST':
-        print(request.form['userInput'])
-        print(request.form['password'])
-        data = {
+    data = {
             'tab_title': 'Login',
             'title': 'Formulario para logearse'
         }
+    if request.method == 'POST':
+        user = usuario(request.form['userInput'],request.form['password'])
+        logged_user = ModelUsuarios.login(conn, user)
+
+        if logged_user != None:
+            if logged_user.password:
+                return redirect(url_for('index'))
+            else:
+                flash("Contraseña incorrecta... sospechoso")
+                return render_template('login.html',data = data)
+        else:
+            flash("Usuario no encontrado :(")
+
+
         return render_template('login.html', data = data)
     else:
         data = {
@@ -83,11 +100,10 @@ def query_string():
 def listar_cursos():
     data = {}
     try:
-        conn = connection()
         cursor = conn.cursor()
         query = '''
             SELECT *
-            FROM p1_prueba
+            FROM usuarios
         '''
         cursor.execute(query)
         cursos = cursor.fetchall()
@@ -96,7 +112,7 @@ def listar_cursos():
         results = [tuple(row) for row in cursos]
         print(cursos)
         print(results)
-        data['cursos'] = results #cursos
+        data['cursos'] = dict(results) #cursos
 
         data['mensaje'] = 'Exito'
 

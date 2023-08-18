@@ -6,7 +6,7 @@
 {% block navbar%}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href={{data.navbar.home}}>Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
       aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -14,16 +14,16 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href={{data.navbar.home}}>Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href={{data.navbar.features}}>Features</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href={{data.navbar.thisproject}}>ThisProject</a>
         </li>
       </ul>
-      <button class="btn btn-outline-light" type="submit" href="{url_for('login')}">LogIn</button>
+      <a href="{{ url_for('login') }}"><button class="btn btn-outline-light" type="submit">LogIn</button></a>
     </div>
   </div>
 </nav>
@@ -49,7 +49,7 @@
 {% endif %}
 
 <a href="{{ url_for('login') }}">
-<button class="btn btn-success" >boton</button>
+<button class="btn btn-success" >LogIn</button>
 </a>
 
 {% endblock %}

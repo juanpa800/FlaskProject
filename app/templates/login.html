@@ -3,30 +3,31 @@
 
 {% block navbar%}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarScroll">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 {% endblock %}
 
 {% block body %}
-<section class="vh-100" style="background-color: #9A616D;">
+<section class="vh-100">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
@@ -47,28 +48,43 @@
                   </div>
 
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+                  {% with messages = get_flashed_messages() %}
+
+                  {% if messages %}
+
+                  {% for message in messages%}
+                  <div class="alert alert-primary alert-dismissible" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                    </button>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                  {% endwith %}
 
                   <div class="form-outline mb-4">
-                    <input type="text" id="form2Example17" class="form-control form-control-lg" name="userInput">
+                    <input type="text" id="form2Example17" class="form-control form-control-lg" name="userInput"
+                      required>
                     <label class="form-label" for="form2Example17">Username</label>
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="password" id="form2Example27" class="form-control form-control-lg" name="password"/>
+                    <input type="password" id="form2Example27" class="form-control form-control-lg" name="password"
+                      required>
                     <label class="form-label" for="form2Example27">Password</label>
                   </div>
 
                   <div class="pt-1 mb-4">
-                    <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                    <button class="btn btn-dark btn-lg btn-block ml-5" type="submit">Login</button>
+                    <hr>
+                    <button class="btn btn-secondarylight btn-lg btn-block mr-5" type="submit">Create User</button>
                   </div>
 
                   <a class="small text-muted" href="#!">Forgot password?</a>
-                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#!"
-                      style="color: #393f81;">Register here</a></p>
+
                   <a href="#!" class="small text-muted">Terms of use.</a>
                   <a href="#!" class="small text-muted">Privacy policy</a>
                 </form>
-
               </div>
             </div>
           </div>
